@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { AiOutlineClose, AiOutlineMenu } from "react-icons/ai";
 import { Link } from "react-scroll";
 
@@ -9,9 +9,24 @@ const Navbar = () => {
     setNav(!nav);
   };
 
+  // Close the navbar on scroll
+  const handleScroll = () => {
+    if (nav) {
+      setNav(false);
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+
+    // Cleanup the event listener on component unmount
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [nav]);
+
   return (
     <div className="flex justify-between items-center h-24 max-w-[1240px] mx-auto px-4 text-white">
-      {/* Clickable title that scrolls to the home section */}
       <Link
         to="home"
         smooth={true}
